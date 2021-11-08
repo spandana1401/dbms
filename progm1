@@ -1,0 +1,21 @@
+create table publisher(name varchar(20),address varchar(20),phone integer(20),primary key(name));
+
+create table book(book_id integer(20),tittle varchar(20),publisher_name varchar(20),pub_year integer(20),primary key(book_id),foreign key(publisher_name) references (publisher(name) on delete cascade);
+
+create table library_programme(programme_id integer(20),programme_name varchar(20),address varchar(20),primary key(programme_id));
+
+create table book_authors(book_id integer(20),author_name varchar(20),primary key(book_id),foreign key(book_id) references book(book_id) on delete cascade);
+
+create table book_copies(book_id integer(20),programme_id integer(20),no_of_copies integer(20),primary key(book_id,programme_id),foreign key(book_id) references book(book_id) on delete cascade,foreign key(programme_id) references library_programme(programme_id) on delete cascade);
+
+
+create table book_lening(book_id integer(20),programme_id integer(20),card_no integer(20),date_out date,due_date date,primary key(book_id,programme_id,card_no),foreign key(book_id) references book(book_id) on delete cascade,foreign key(programme_id) references library_programme(programme_id) on delete cascade);
+
+insert into publisher value('PERSON','ADDRESS',989898);
+
+insert into publisher value('MCGRAW','NEW DELHI',989897);
+
+insert into publisher value('SAPNA','MANGLORE',989898);
+
+insert into publisher value('OXFORD','NEW DELHI',989895);
+insert into book value(101,'DBMS','PERSON',2004);
