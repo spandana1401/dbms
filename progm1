@@ -1,21 +1,73 @@
+create database library;
+
+ use database;
+
 create table publisher(name varchar(20),address varchar(20),phone integer(20),primary key(name));
 
-create table book(book_id integer(20),tittle varchar(20),publisher_name varchar(20),pub_year integer(20),primary key(book_id),foreign key(publisher_name) references (publisher(name) on delete cascade);
+ create table book(book_id integer(20),tittle varchar(20),publisher_name varchar(20),pub_year integer(20),primary key(book_id),foreign key(publisher_name) references publisher(name) on delete cascade);
 
-create table library_programme(programme_id integer(20),programme_name varchar(20),address varchar(20),primary key(programme_id));
+ create table library_programme(programme_id integer(20),programme_name varchar(20),address varchar(20),primary key(programme_id));
 
-create table book_authors(book_id integer(20),author_name varchar(20),primary key(book_id),foreign key(book_id) references book(book_id) on delete cascade);
+ create table book_authors(book_id integer(20),author_name varchar(20),primary key(book_id),foreign key(book_id) references book(book_id) on delete cascade);
 
-create table book_copies(book_id integer(20),programme_id integer(20),no_of_copies integer(20),primary key(book_id,programme_id),foreign key(book_id) references book(book_id) on delete cascade,foreign key(programme_id) references library_programme(programme_id) on delete cascade);
+ create table book_copies(book_id integer(20),programme_id integer(20),no_of_copies integer(20),primary key(book_id,programme_id),foreign key (programme_id) references library_programme(programme_id) on delete cascade);
+
+create table book_lending(book_id integer(20),programme_id integer(20),card_no integer(20),date_out date,due_date date,primary key(book_id,programme_id,card_no),foreign key(book_id) references book(book_id) on delete cascade,foreign key(programme_id) references library_programme(programme_id) on delete cascade);
+
+insert into publisher value('PEARSON','BANGLORE',989898);
+
+insert into publisher value('MACGRAW','NEWDELHI',989897);
+
+insert into publisher value('SWAPNA','MANGLORE',989896);
+
+mysql> insert into publisher value('OXFORD','NEW DELHI',989895);
 
 
-create table book_lening(book_id integer(20),programme_id integer(20),card_no integer(20),date_out date,due_date date,primary key(book_id,programme_id,card_no),foreign key(book_id) references book(book_id) on delete cascade,foreign key(programme_id) references library_programme(programme_id) on delete cascade);
+mysql> insert into book value(100,'DBMS','PEARSON',2005);
 
-insert into publisher value('PERSON','ADDRESS',989898);
 
-insert into publisher value('MCGRAW','NEW DELHI',989897);
+mysql> insert into book value(101,'SE','MACGRAW',2004);
 
-insert into publisher value('SAPNA','MANGLORE',989898);
+mysql> insert into book value(102,'CO','SWAPNA',2010);
 
-insert into publisher value('OXFORD','NEW DELHI',989895);
-insert into book value(101,'DBMS','PERSON',2004);
+mysql> insert into book value(103,'DMS','OXFORD',2010);
+
+
+mysql> insert into library_programme value(10,'P1','BANGLORE');
+
+mysql> insert into library_programme value(11,'P2','MANGLORE');
+
+mysql> insert into library_programme value(12,'P3','NEW DELHI');
+
+mysql> insert into library_programme value(13,'P4','CHENNAI');
+
+mysql> insert into book_lending value(100,10,1,"2018-01-10","2018-01-17");
+
+mysql> insert into book_lending value(101,11,2,"2018-02-11","2018-02-18");
+
+
+mysql> insert into book_lending value(102,12,3,"2018-03-05","2018-03-12");
+
+
+mysql> insert into book_lending value(103,13,4,"2018-04-01","2018-04-08");
+
+
+
+mysql> insert into book_authors value(100,'A1');
+
+mysql> insert into book_authors value(101,'A2');
+
+mysql> insert into book_authors value(102,'A3');
+
+
+mysql> insert into book_authors value(103,'A4');
+
+
+mysql> insert into book_copies value(100,10,550);
+
+
+mysql> insert into book_copies value(101,11,650);
+
+mysql> insert into book_copies value(102,12,750);
+
+mysql> insert into book_copies value(103,13,850);
